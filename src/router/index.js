@@ -1,29 +1,85 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+const Index  = () => import('@/views/Index')
+const RecomendMusic = () => import('@/components/recomendmusic/RecomendMusic')
+const Rank = () => import('@/components/rank/Rank')
+const Musiclist = () => import('@/components/musiclist/Musiclist')
+const Singer = () => import('@/components/singer/Singer')
+const Video = () => import('@/components/video/Video')
+const Mv = () => import('@/components/mv/Mv')
+const songsheet = () => import('@/components/songsheet/SongSheet')
+const SingerDetail = () => import('@/components/singerdetail/SingerDetail')
+const AblumSheet = () => import('@/components/ablumsheet/AblumSheet')
 
 Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path:'',
+    redirect:"/mango-music"
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/mango-music',
+    name: 'Index',
+    component: Index,
+    redirect:'/mango-music/recomendmusic',
+    children:[
+      {
+        path:'/mango-music/recomendmusic',
+        component:RecomendMusic
+      },
+      {
+        path:'/mango-music/rank',
+        component:Rank
+      },
+      {
+        path:'/mango-music/musiclist',
+        component:Musiclist
+      },
+      {
+        path:'/mango-music/singer',
+        component:Singer
+      },
+      {
+        path:'/mango-music/vedio',
+        component:Video
+      },
+      {
+        path:'/mango-music/mv',
+        component:Mv
+      },
+      {
+        path:'/mango-music/songsheet',
+        name:'songsheet',
+        component:songsheet
+      },
+      {
+        path:'/mango-music/singer-detail',
+        name:'SingerDetail',
+        component:SingerDetail
+      },
+      {
+        path:'/mango-music/ablumsheet',
+        name:'AblumSheet',
+        component:AblumSheet
+      }
+    ]
+  },
+
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
-  routes
+  routes,
+    // 路由切换时，更新显示坐标 https://blog.csdn.net/panchang199266/article/details/90524319
+    scrollBehavior (to, from, savedPosition) {
+      return { x:0, y:0}
+    }
 })
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+   return originalPush.call(this, location).catch(err => err)
+}
 export default router

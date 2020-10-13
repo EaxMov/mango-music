@@ -1,0 +1,55 @@
+@import "./normalize.css";
+body, button, input, select, textarea {
+  font-family: PingFang SC,Arial,Microsoft YaHei,sans-serif;
+  color:#4a4a4a ;
+}
+body{
+  margin: 0;
+  padding: 0;
+  background-color: #fefefe;
+  user-select: none;
+}
+.shadow{
+  background-color: #fff;
+  box-shadow: 0 5px 38px -1px rgba(3, 11, 19, 0.1);
+}
+*, :after, :before {
+  box-sizing: border-box;
+}
+.bystyle{
+  max-width: 1380px;
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.el-message-box__message p {
+  overflow-y: scroll;
+  max-height: 400px;
+}
+.el-input__inner{
+  border: none !important;
+  width: 100% !important;
+  text-align: center;
+  background-color:#f2aa0c !important;
+  color: white !important;
+}
+.el-input__suffix {
+  padding-right: 0 !important;
+}
+.el-input__icon{
+  color: white !important;
+}
+.el-cascader-menu__wrap{
+  height: 214px !important;
+}
+.el-pager li.active {
+  color: #f82800 !important;
+}
+
+.el-pager li:hover {
+  color: #f82800 !important;
+}
+
+.el-popover__title{
+  text-align: center;
+}
