@@ -10,6 +10,7 @@ const Mv = () => import('@/components/mv/Mv')
 const songsheet = () => import('@/components/songsheet/SongSheet')
 const SingerDetail = () => import('@/components/singerdetail/SingerDetail')
 const AblumSheet = () => import('@/components/ablumsheet/AblumSheet')
+const Search = () => import('@/components/search/Search')
 
 Vue.use(VueRouter)
 
@@ -62,6 +63,11 @@ Vue.use(VueRouter)
         path:'/mango-music/ablumsheet',
         name:'AblumSheet',
         component:AblumSheet
+      },
+      {
+        path:'/mango-music/search',
+        name:'Search',
+        component:Search
       }
     ]
   },

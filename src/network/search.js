@@ -7,7 +7,7 @@ export function getSearchHot(){  //简略热搜
 }
 
 
-export function getSearchHotDetail(){  //简略热搜
+export function getSearchHotDetail(){  //详细热搜
   return request({
     url:`/search/hot/detail`
   })  

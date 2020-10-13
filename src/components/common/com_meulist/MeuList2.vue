@@ -139,13 +139,14 @@ h4{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 0.8rem;
   padding: 0 2px;
 }
 .cover .covercount i{
   display: block;
   margin-right: 3px;
-  font-size: 17px;
+  font-size: 14px;
+  line-height: 1.8;
 }
 .listItem:hover .covercount{
   top:0;
