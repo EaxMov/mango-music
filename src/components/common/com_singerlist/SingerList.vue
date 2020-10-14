@@ -5,7 +5,8 @@
     <div class="cover"><img  alt="" v-lazy="item.img1v1Url + '?param=200y200' "></div>
     <div class="info">
       <p :title="item.name">{{item.name}}</p>
-      <p>单曲：{{item.musicSize}}</p>
+      <p v-if="showType==1">单曲：{{item.musicSize}}</p>
+      <p v-if="showType==2" class="mvstyle">MV：{{item.mvSize}}</p>
     </div>
   </li>
 </ul>
@@ -23,6 +24,10 @@ export default {
     recommendSinger:{
       type:Array,
       default:[]
+    },
+    showType:{
+      type:Number,
+      default:1
     }
   },
   methods: {
@@ -85,5 +90,9 @@ export default {
   font-size: 12px;
   margin-top: 12px;
   font-weight: 400;
+}
+.mvstyle{
+  font-weight: 700 !important;
+  color: #a79191 !important;
 }
 </style>

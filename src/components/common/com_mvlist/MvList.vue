@@ -3,17 +3,25 @@
   <ul class="mvlist" v-if="mvlistArr  && mvlistArr.length>0">
     <li v-for="item in mvlistArr">
       <div class="cover">
-        <div class="publishitime">{{item.publishTime}}</div>
+        <div class="publishitime"  v-if="Meutype=='normal'">{{item.publishTime}}</div>
         <div class="image">
-          <img v-lazy="item.imgurl16v9 + '?param=325y197'" alt="">
+          <img v-if="Meutype=='normal'" v-lazy="item.imgurl16v9 + '?param=325y197'" alt="">
+          <img v-if="Meutype=='search'" v-lazy="item.coverUrl + '?param=325y197'" alt="">
           </div>
-        <div class="count"><i class="iconfont icon-bofangsanjiaoxing"></i><span>{{item.playCount | playCount}}</span></div>
+        <div class="count">
+          <i class="iconfont icon-bofangsanjiaoxing"></i>
+          <span  v-if="Meutype=='normal'">{{item.playCount | playCount}}</span>
+          <span  v-if="Meutype=='search'">{{item.playTime | playCount}}</span>
+        </div>
         <div class="duration">
-          <div class="name">{{item.artistName}}</div>
-          <div class="time">{{item.duration | formatDate}}</div>
+          <div class="name" v-if="Meutype=='normal'">{{item.artistName}}</div>
+          <div class="time" v-if="Meutype=='normal'">{{item.duration | formatDate}}</div>
+          <div class="name" v-if="Meutype=='search'">{{item.creator[0].userName}}</div>
+          <div class="time" v-if="Meutype=='search'">{{item.durationms | formatDate}}</div>
         </div>
       </div>
-      <div class="info" :title="item.name">{{item.name}}</div>
+      <div v-if="Meutype=='normal'" class="info" :title="item.name">{{item.name}}</div>
+      <div v-if="Meutype=='search'" class="info" :title="item.title">{{item.title}}</div>
     </li>
   </ul>
   <Empty v-else/>
@@ -32,6 +40,10 @@ export default {
     mvlistArr:{
       type:Array,
       default:[]
+    },
+    Meutype:{
+      type:String,
+      default:'normal'
     }
   },
   filters:{

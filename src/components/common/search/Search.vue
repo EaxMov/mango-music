@@ -2,8 +2,8 @@
     <div class="SearchBox">
      <el-popover ref="popover" placement="bottom" title="热搜榜" width="350" trigger="hover" :close-delay="500" @show="ishow(true)" @hide="ishow(false)">
       <div class="SearchHistory">
-        <h4 class="toptile" @click="changemeu = true"><i class="iconfont icon-re"></i>热搜榜</h4>
-        <h4 class="toptile"  @click="changemeu = false"><i class="iconfont icon-zuji"></i>历史搜索</h4>
+        <h4 class="toptile" :class="{toptileselect:changemeu}" @click="changemeu = true"><i class="iconfont icon-re"></i>热搜榜</h4>
+        <h4 class="toptile" :class="{toptileselect:!changemeu}" @click="changemeu = false"><i class="iconfont icon-zuji"></i>历史搜索</h4>
       </div>
       <ul class="SearchList" v-show="changemeu">
         <li v-for="(item,index) in hotSearchListDetail" @click="selectKeyWord(item.searchWord)">
@@ -12,7 +12,7 @@
             <div class="titleAndInfo">
               <span class="musicname">{{item.searchWord}}</span>
               <span class="score">{{item.score}}</span>
-              <span :class="[{'icon-hot topthree':item.iconType===1},{'icon-top dsec':item.iconType===5},{'icon-new newcolor':item.iconType===2},'iconfont']"></span>
+              <span :class="[{'icon-hot topthree':item.iconType===1},{'icon-top ascending':item.iconType===5},{'icon-new newcolor':item.iconType===2},'iconfont']"></span>
             </div>
             <div class="dsec">{{item.content}}</div>
           </div>
@@ -57,6 +57,18 @@ export default {
       }
     },
     selectKeyWord(keyword){
+
+      var history = window.localStorage.getItem('SearchHistory')
+      if(history === null){
+        history = []
+      }else{
+        history = history.split(",")
+      }
+      history.unshift(keyword)
+      history = Array.from(new Set(history))
+      window.localStorage.setItem('SearchHistory',history)
+
+      console.log( window.localStorage.getItem('SearchHistory'));
       this.$router.push({
         name:'Search',
         query:{
@@ -123,6 +135,7 @@ export default {
 .SearchList li:hover{
   background-color: rgb(153, 153, 153,.1);
   border-radius: 5px 0px 0 5px;
+  transition: all .3s linear;
 }
 .SearchList li .top{
   flex: 0 0 15%;
@@ -174,6 +187,10 @@ export default {
   font-size: 25px;
   line-height: 0px;
 }
+.ascending{
+  color: #999999;
+  font-size: 25px;
+}
 .toptile{
   padding: 5px 10px;
   margin: 10px 0;
@@ -191,5 +208,8 @@ export default {
 }
 .SearchHistory{
   display: flex;
+}
+.toptileselect{
+  color: red;
 }
 </style>
