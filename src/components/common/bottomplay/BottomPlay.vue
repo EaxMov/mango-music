@@ -42,7 +42,9 @@ export default {
   },
   created() {
     this.$bus.$on('BtPlayisShowEvent',(MusicConfig) => {
+      console.log(MusicConfig);
       if(MusicConfig.fee === 4 ){return notifyToast(this,'这首歌是收费的QAQ','error',70,"《"+MusicConfig.name+'》') }  //开始先检测是不是收费歌曲
+      if(MusicConfig.fee === 1 ){return notifyToast(this,'这首歌是VIP歌曲QAQ','error',70,"《"+MusicConfig.name+'》') }  //开始先检测是不是VIP歌曲
       if(!this.BtPlayisShow){this.BtPlayisShow = true} //如果底部播放器是显示状态，就不需要再显示出来了
       if(this.$store.state.PlayingMusicConfig.id == MusicConfig.id && this.$store.state.model === 1) { //如果点击播放的歌曲与上一首的id相同，则不再重复获取音乐MP3链接
         notifyToast(this,'播放歌曲重复啦~~~~','warning',70) //提示框

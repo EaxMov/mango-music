@@ -20,7 +20,7 @@
       </ul>
       <div v-show="!changemeu">1</div>
      </el-popover>
-      <input type="text" placeholder="Music to search" class="search-txt" v-popover:popover ref="inputRef">
+      <input type="text" placeholder="Music to search" v-model="inputcontent" class="search-txt" v-popover:popover ref="inputRef" @keydown="enterSearch">
       <a class="search-btn">
       <i class="iconfont icon-search"></i>
       </a>
@@ -35,7 +35,8 @@ export default {
     return {
       hotSearchList:[], //热搜列表
       hotSearchListDetail:[], //搜索榜详细列表
-      changemeu:true
+      changemeu:true,
+      inputcontent:''
     }
   },
   created() {
@@ -56,8 +57,28 @@ export default {
         this.$refs.inputRef.style.width = ''
       }
     },
-    selectKeyWord(keyword){
-
+    selectKeyWord(keyword){   //搜索跳转时间
+      this.savehistoy(keyword)
+      console.log( window.localStorage.getItem('SearchHistory'));
+      this.$router.push({
+        name:'Search',
+        query:{
+          keyword
+        }
+      })
+    },
+    enterSearch(e){ //回车搜索
+      if (e.keyCode == 13) {
+        this.savehistoy(this.inputcontent)
+        this.$router.push({
+          name:'Search',
+          query:{
+            keyword:this.inputcontent
+          }
+        })
+      }
+    },
+    savehistoy(keyword){ //保存历史记录
       var history = window.localStorage.getItem('SearchHistory')
       if(history === null){
         history = []
@@ -67,14 +88,6 @@ export default {
       history.unshift(keyword)
       history = Array.from(new Set(history))
       window.localStorage.setItem('SearchHistory',history)
-
-      console.log( window.localStorage.getItem('SearchHistory'));
-      this.$router.push({
-        name:'Search',
-        query:{
-          keyword
-        }
-      })
     }
   },
 }

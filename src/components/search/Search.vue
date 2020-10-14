@@ -106,7 +106,7 @@ export default {
   watch: {
     keywordschange(){
       this.searchkeywords = this.$route.query.keyword
-      this.getdata()
+      this.getDataModul()
     }
   },
 }
