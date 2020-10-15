@@ -2,7 +2,7 @@
 <div class="SearchBox">
   <div class="searchTop">
     <div class="searchBtn">
-      <input type="text" class="input" v-model="searchkeywords" @input="searchAutomatic">
+      <input type="text" class="input" v-model="searchkeywords" @input="searchAutomatic" @keydown="enterSearch">
       <i class="iconfont icon-search btn"></i>
     </div>
   </div>
@@ -87,7 +87,7 @@ export default {
         }
       }, 500);
     },
-    getDataModul(){
+    getDataModul(){  //调动此函数获取搜索页数据
       if(this.searchkeywords){
         this.getSearchKeywords(1)     //单曲
         this.getSearchKeywords(100)  //歌手
@@ -95,6 +95,14 @@ export default {
         this.getSearchKeywords(1014)  //视频
         this.getSearchKeywords(1000)  //歌单
       }
+    },
+    enterSearch(e){
+       if (e.keyCode == 13) {
+         if(this.timer){clearTimeout(this.timer)}
+         if(this.searchkeywords){
+          this.getDataModul()
+         }
+       }
     }
 
   },

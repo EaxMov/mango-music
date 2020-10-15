@@ -47,7 +47,7 @@ export default {
   mounted() { //元素挂载完时获取进度条总长度
     this.$nextTick(() => { //下一次渲染完再获取宽度，不然会有偏差
     setTimeout(() => {
-      this.progressBarLength = Number(parseInt(this.$refs.progressRunRef.offsetWidth)) + 7 /* 17是滚动条的宽度！！！坑 */
+      this.progressBarLength = Number(parseInt(this.$refs.progressRunRef.offsetWidth)) /* 17是滚动条的宽度！！！坑 */
     }, 100);
     })
   },

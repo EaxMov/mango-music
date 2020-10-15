@@ -1,6 +1,6 @@
 <template>
     <div class="SearchBox">
-     <el-popover ref="popover" placement="bottom" title="热搜榜" width="350" trigger="hover" :close-delay="500" @show="ishow(true)" @hide="ishow(false)">
+     <el-popover ref="popover" placement="bottom"  width="350" trigger="hover" :close-delay="500" @show="ishow(true)" @hide="ishow(false)">
       <div class="SearchHistory">
         <h4 class="toptile" :class="{toptileselect:changemeu}" @click="changemeu = true"><i class="iconfont icon-re"></i>热搜榜</h4>
         <h4 class="toptile" :class="{toptileselect:!changemeu}" @click="changemeu = false"><i class="iconfont icon-zuji"></i>历史搜索</h4>
@@ -18,7 +18,12 @@
           </div>
         </li>
       </ul>
-      <div v-show="!changemeu">1</div>
+      <div v-show="!changemeu" >
+         <div class="historytagsbox">
+           <div class="historyitem" v-for="(item,index) in historytags" @click="selectTags(item)">{{item}}<i class="iconfont icon-close" @click="clearAll(2,index)"></i></div>
+         </div>
+         <h4 class="clear" @click="clearAll(1)" v-show="historytags.length>0">清空</h4>
+      </div>
      </el-popover>
       <input type="text" placeholder="Music to search" v-model="inputcontent" class="search-txt" v-popover:popover ref="inputRef" @keydown="enterSearch">
       <a class="search-btn">
@@ -36,18 +41,22 @@ export default {
       hotSearchList:[], //热搜列表
       hotSearchListDetail:[], //搜索榜详细列表
       changemeu:true,
-      inputcontent:''
+      inputcontent:'',
+      historytags:[]  //历史搜索标签
     }
   },
   created() {
     this.getSearchHotDetail()
+    var history = window.localStorage.getItem('SearchHistory')
+    if(history){
+      this.historytags = history.split(',')
+    }
   },
   methods: {
     getSearchHotDetail(){
       getSearchHotDetail().then(res => {
         if(res.data.code!==200){return this.$message.error('获取热搜详细列表失败')}
         this.hotSearchListDetail = res.data.data
-        console.log(this.hotSearchListDetail);
       })
     },
     ishow(bl){
@@ -59,23 +68,12 @@ export default {
     },
     selectKeyWord(keyword){   //搜索跳转时间
       this.savehistoy(keyword)
-      console.log( window.localStorage.getItem('SearchHistory'));
-      this.$router.push({
-        name:'Search',
-        query:{
-          keyword
-        }
-      })
+      this.jumprouter(keyword) //跳转路由
     },
     enterSearch(e){ //回车搜索
       if (e.keyCode == 13) {
-        this.savehistoy(this.inputcontent)
-        this.$router.push({
-          name:'Search',
-          query:{
-            keyword:this.inputcontent
-          }
-        })
+        this.savehistoy(this.inputcontent) //保存历史
+        this.jumprouter(this.inputcontent) //跳转路由
       }
     },
     savehistoy(keyword){ //保存历史记录
@@ -87,7 +85,31 @@ export default {
       }
       history.unshift(keyword)
       history = Array.from(new Set(history))
+      if(history.length>15){
+        history.pop()
+      }
       window.localStorage.setItem('SearchHistory',history)
+      this.historytags =  window.localStorage.getItem('SearchHistory').split(',')
+    },
+    selectTags(keyword){ //点击单个标签事件搜索
+      this.jumprouter(keyword)
+    },
+    clearAll(del,index){ //删除事件
+      if(del === 1){
+        this.historytags = []
+        window.localStorage.clear()
+      }else{
+        this.historytags.splice(index,1)
+        window.localStorage.setItem('SearchHistory',this.historytags)
+      }
+    },
+    jumprouter(keyword){ //跳转路由
+      this.$router.push({
+          name:'Search',
+          query:{
+            keyword
+          }
+      })
     }
   },
 }
@@ -224,5 +246,39 @@ export default {
 }
 .toptileselect{
   color: red;
+}
+.historytagsbox{
+  max-height: 400px;
+  margin:0;
+  padding: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+}
+.historyitem{
+  padding: 3px 5px;
+  margin: 5px;
+  border-radius: 5px;
+  background-color:#f4f4f5;
+  cursor: pointer;
+}
+.historyitem i{
+  margin-left: 5px;
+  color: #c1c1c4;
+}
+.historyitem:hover{
+  background-color: #dbdbdd;
+  transition: all .3s linear;
+}
+.historyitem:hover i{
+  color: #727274;
+  transition: all .3s linear;
+}
+.clear{
+  text-align: right;
+  font-weight: normal;
+  cursor: pointer;
+  color: #c1c1c4;
 }
 </style>

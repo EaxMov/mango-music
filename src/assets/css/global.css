@@ -26,12 +26,17 @@ body{
   overflow-y: scroll;
   max-height: 400px;
 }
-.el-input__inner{
+.el-cascader .el-input .el-input__inner{
   border: none !important;
   width: 100% !important;
   text-align: center;
   background-color:#f2aa0c !important;
   color: white !important;
+}
+.el-input__inner {
+  /* border: 1px solid #a2a3a3 !important;  */
+  background-color: rgba(255,255,255,.55) !important;
+  padding: 0 30px !important;
 }
 .el-input__suffix {
   padding-right: 0 !important;
@@ -52,4 +57,8 @@ body{
 
 .el-popover__title{
   text-align: center;
+}
+
+.el-pagination__jump .el-input__inner{
+  padding: 0 3px !important;
 }

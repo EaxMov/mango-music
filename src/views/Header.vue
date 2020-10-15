@@ -4,11 +4,11 @@
     <div class="logo"><img src="~@/assets/img/logo.png" alt="" @click="$router.push('/mango-music/recomendmusic').catch(err => err);currentIndex=0"></div>
     <ul>
       <li v-for="(items,index) in category" @click=" Pushrouter(index)" >
-        
         <a :class="[{liisactive:index === currentIndex},{fontcolor:index === currentIndex}]">{{items}}</a>
       </li>
     </ul>
     <Search />
+    <div class="login" @click="goLogin">登录</div>
   </div>
 </div>
 </template>
@@ -37,6 +37,11 @@ export default {
         case 4 : this.$router.push('/mango-music/vedio');break
         case 5 : this.$router.push('/mango-music/mv');break
       }
+    },
+    goLogin(){
+      this.$router.push({
+        name:'Login'
+      })
     }
   },
   computed: {
@@ -141,5 +146,14 @@ ul li{
 .fontcolor{
   color:  #f5a90b;
   transition: all .2s linear;
+}
+.login{
+  cursor: pointer;
+  padding-left: 15px;
+  font-size: 14px;
+  border-left: 1px solid #e1e1e1;
+}
+.login:hover{
+  color: #f43f29
 }
 </style>

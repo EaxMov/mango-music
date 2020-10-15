@@ -3,7 +3,7 @@ import axios from "axios"
 export function request(config) {
   const instance = axios.create({
     baseURL: "http://120.25.229.211:3000/",
-    timeout: 10000,
+    timeout: 10000
   })
 
   instance.interceptors.request.use(
@@ -17,3 +17,4 @@ export function request(config) {
 
   return instance(config) //直接返回
 }
+
