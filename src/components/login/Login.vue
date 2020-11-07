@@ -6,7 +6,7 @@
     <img src="~@/assets/img/mangologo.png" alt="" class="logo">
     <p class="logintitle">Login</p>
     <div class="loginbox">
-      <el-form :model="userinfo" status-icon :rules="rules" ref="ruleForm" >
+      <el-form :model="userinfo" :rules="rules" ref="ruleForm" >
       <div class="username">
         <el-form-item  prop="username">
           <el-input placeholder="请输入网易云手机号" @focus="gefocus" v-model="userinfo.username"></el-input>
@@ -14,7 +14,7 @@
       </div>
       <div class="password">
       <el-form-item  prop="password">
-          <el-input type="password" placeholder="请输入密码" @focus="gefocus" v-model="userinfo.password"></el-input>
+          <el-input show-password placeholder="请输入密码" @focus="gefocus" v-model="userinfo.password"></el-input>
       </el-form-item>
       </div>
       </el-form>
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       blur:false,
-      userinfo:{username:'',password:''},
+      userinfo:{username:'17520633370',password:'a3436500'},
       rules:{username:{ required: true, message: '请输入手机号', trigger: 'blur' },
              password:{ required: true, message: '请输入密码', trigger: 'blur' }
             }
@@ -47,25 +47,27 @@ export default {
     gefocus(){
       this.blur = true
       this.$refs.BgRef.style = 'opacity: 1; transform: scale(1.1);'
-      this.$refs.pinfo.style = 'color:#cbcdcf;'
-      this.$refs.ainfo.style = 'color:#cbcdcf;'
+      this.$refs.ainfo.style = this.$refs.pinfo.style = 'color:#cbcdcf;'
     },
     getblur(){
       this.blur = false 
       this.$refs.BgRef.style = 'opacity: 1;'
-      this.$refs.pinfo.style = ''
-      this.$refs.ainfo.style = ''
+      this.$refs.ainfo.style = this.$refs.pinfo.style = ''
     },
     login(){
       this.$refs.ruleForm.validate(valid => {
         if(valid){
           login(this.userinfo.username,this.userinfo.password).then(res => {
-            console.log(res.data.code);
             if(res.data.code !==200){return this.$message.error(res.data.msg)}
             this.$message.success('登陆成功')
+            this.$router.go(-1)
+            window.localStorage.setItem('info',JSON.stringify(res.data))
+            window.localStorage.setItem('cookie',res.data.cookie)
           }).catch(err => {
-          this.$message.error(err.response.data.msg)
-        })
+            if(err && err.response){
+              this.$message.error(err.response.data.msg)
+            }
+          })
         }else{
           this.$message.error('信息填写不完整!')
         }

@@ -67,9 +67,9 @@ export default {
   align-content: center;
   justify-content: center;
   margin-top: 0.5em;
+  position: absolute;
 }
 .swiper-pagination-bullet {
-  padding: 5px;
   width: 10px;
   height: 10px;
   display: inline-block;

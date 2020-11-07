@@ -1,14 +1,30 @@
 <template>
 <div class="header shadow">
   <div class="header-container">
-    <div class="logo"><img src="~@/assets/img/logo.png" alt="" @click="$router.push('/mango-music/recomendmusic').catch(err => err);currentIndex=0"></div>
-    <ul>
+    <div class="logo"><img src="~@/assets/img/logo.png" alt="" @click="$router.push('/mango-music/recomendmusic');currentIndex=0"></div>
+    <ul class="meulist">
       <li v-for="(items,index) in category" @click=" Pushrouter(index)" >
-        <a :class="[{liisactive:index === currentIndex},{fontcolor:index === currentIndex}]">{{items}}</a>
+        <a :class="[{liisactive:index === currentIndex},{hfontcolor:index === currentIndex}]">{{items}}</a>
       </li>
     </ul>
     <Search />
-    <div class="login" @click="goLogin">登录</div>
+    <div class="space"></div>
+    <div class="login" @click="goLogin" v-if="userinfo===true">登录</div>
+    <div class="user" v-else>
+      <div class="avator"><img :src="userinfo.profile.avatarUrl + '?param=50y50'" alt=""></div>
+       <el-dropdown trigger="click" @command="handleCommand">
+        <span class="el-dropdown-link">
+          <a class="nickname">{{userinfo.profile.nickname}}</a>
+          <i class="el-icon-arrow-down"></i>
+        </span>
+         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-user" command="0">个人主页</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-star-off" command="1">我的等级</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-setting" command="2">个人设置</el-dropdown-item>
+          <el-dropdown-item divided icon="el-icon-circle-close" command="3">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </div>
 </template>
@@ -16,6 +32,7 @@
 <script>
 import Search from "@/components/common/search/Search";
 export default {
+  inject:['reload'],
   name:'Header',
   components:{
     Search
@@ -34,7 +51,7 @@ export default {
         case 1 : this.$router.push('/mango-music/rank');break
         case 2 : this.$router.push('/mango-music/musiclist');break
         case 3 : this.$router.push('/mango-music/singer');break
-        case 4 : this.$router.push('/mango-music/vedio');break
+        case 4 : this.$router.push('/mango-music/video');break
         case 5 : this.$router.push('/mango-music/mv');break
       }
     },
@@ -42,11 +59,23 @@ export default {
       this.$router.push({
         name:'Login'
       })
+    },
+    handleCommand(index){
+      switch(index){
+        case '3' : window.localStorage.removeItem('cookie');console.log(1);this.reload(); break
+      }
     }
   },
   computed: {
     watchpath(){
       return this.$route.path
+    },
+    userinfo(){
+      if(window.localStorage.getItem('info')){
+        return JSON.parse(window.localStorage.getItem('info'))
+      }else{
+        return true
+      }
     }
   },
   watch: {
@@ -80,10 +109,8 @@ export default {
    transition: all .4s ease-in-out;
    max-width: 1380px;
    width: 100%;
-   padding-right: 15px;
-   padding-left: 15px;
-   margin-right: auto;
-   margin-left: auto;
+   padding: 0 15px;
+   margin:0 auto;
 }
 .logo{
   width: 163px;
@@ -93,7 +120,7 @@ export default {
   background-size: cover;
   width: 100%;
 }
-ul{
+.meulist{
   list-style-type: none;
   display: flex;
   font-size:14px;
@@ -103,10 +130,10 @@ ul{
   flex: 1;
   align-items: center;
 }
-ul li a{
+.meulist li a{
   position: relative;
 }
-ul li{
+.meulist li{
   height: 100%;
   padding: 0 15px;
   cursor: pointer;
@@ -143,7 +170,7 @@ ul li{
     height: 4px;
   }
 }
-.fontcolor{
+.hfontcolor{
   color:  #f5a90b;
   transition: all .2s linear;
 }
@@ -151,9 +178,33 @@ ul li{
   cursor: pointer;
   padding-left: 15px;
   font-size: 14px;
-  border-left: 1px solid #e1e1e1;
 }
 .login:hover{
   color: #f43f29
+}
+.user{
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  cursor: pointer;
+}
+.avator{
+  width: 45px;
+  height: 45px;
+}
+.avator img{
+  border-radius: 50%;
+  width: 100%;
+  display: block;
+}
+.space{
+  width: 1px; 
+  height: 15px;
+  background-color: rgb(214, 213, 213);
+}
+.nickname{
+  margin: 0 15px;
+  font-size: 14px;
 }
 </style>

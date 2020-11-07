@@ -43,7 +43,7 @@ Vue.use(VueRouter)
         component:Singer
       },
       {
-        path:'/mango-music/vedio',
+        path:'/mango-music/video',
         component:Video
       },
       {

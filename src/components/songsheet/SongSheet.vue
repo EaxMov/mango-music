@@ -24,7 +24,7 @@
           标签：<a class="tagsitems" v-for="item in songsheetList.tags">{{item}}</a>
         </div>
         <p class="introduce" v-html="songsheetList.description"></p>
-        <div class="showAll" v-if="introducelength(songsheetList.description) > 50"><a @click="showAll(songsheetList.name,songsheetList.description)">详情 ></a></div>
+        <div class="showAll" v-if="introducelength(songsheetList.description) > 50"><a @click="showAll(songsheetList.name,songsheetList.description)">详情<i class="el-icon-arrow-right"></i></a></div>
       </div>  
     </div>
 

@@ -96,13 +96,14 @@ export default {
     handleChange(value){  //级联选择器切换
       value.length === 1 ? this.currentIndex = value[0] : this.currentIndex = value[1]
       this.getCatgoryList(this.typestr,this.currentIndex,40,0)
+      this.currenPage = 1
     },
     clicktype(type){ //点击分类
       if(this.currentIndex === type.name) return 
       this.value = []
       this.currentIndex = type.name
       this.value[0] = this.CatList[type.category+1].label
-
+      this.currenPage = 1
       var bl = this.CatList[type.category + 1].children.some(item => {
         return item.name === type.name
       })
@@ -119,7 +120,7 @@ export default {
       this.getCatgoryList(this.typestr,this.currentIndex,40,0)
     },
     handleCurrentChange(offset){ //页数发送改变
-      this.getCatgoryList(this.typestr,this.currentIndex,40,offset-1)
+      this.getCatgoryList(this.typestr,this.currentIndex,40,(offset-1)*40)
     }
   },
   computed: {
@@ -131,60 +132,9 @@ export default {
 </script>
 
 <style scoped>
-.topBox{
-  width: 100%;
-  height: 40px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-}
-.HotList{
-  margin:0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-}
-.CatHotBox{
-  flex: 1;
-  width: 20px;
-  height: 20px;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-}
+
 .el-cascader{
   width: 6.8rem;
-}
-
-.HotList li{
-  margin: 0 5px;
-  padding-right: 10px;
-  cursor: pointer;
-  font-size: 14px;
-}
-.HotList li:hover{
-  color: rgb(151, 154, 156);
-}
-.fontcolor{
-  color: #f72800;
-}
-.typeall{
-  margin-left: 20px;
-  background: #e4e4e4;
-  padding: 7px 10px;
-  color: #212933;
-  font-size: 12px;
-  border-radius: 3px;
-  transition: all .4s;
-  cursor: pointer;
-}
-.seachtype{
-  display: flex;
-  margin-right: 20px;
-}
-.type_select{
-  color: white;
-  background-color: #f72800;
 }
 .musicListBox{
   margin-top: 30px;

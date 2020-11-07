@@ -32,7 +32,7 @@ export default {
   data(){
     return{
       PlayListDetailTop4:[],
-      loading:[true,true,true,true],
+      loading:true,
       top4config:[19723756,3779629,2884035,3778678]
     }
   },
@@ -47,17 +47,19 @@ export default {
   },
   methods: {
      getPlayListDetail(){
-        this.getDetail(19723756,0)
-        this.getDetail(3779629,1)
-        this.getDetail(2884035,2)
-        this.getDetail(3778678,3)
+        this.getDetail()
     },
-    getDetail(id,index){
-        this.loading[index] = true
-      getPlayListDetail(id).then(res => {
-          var featureList = res.data.playlist.tracks.slice(0,8)
-          this.PlayListDetailTop4.splice(index,0,featureList)
-          this.loading[index] = false
+    getDetail(){
+        this.loading = true
+      getPlayListDetail(19723756).then(res => {
+          var featureList = []
+          var number = 0
+          for(var i = 0;i < 4;i++){
+            featureList = res.data.playlist.tracks.slice(number,number+8)
+            this.PlayListDetailTop4.splice(i,0,featureList)
+            number+=8
+          }
+          this.loading  = false
       })
     },
     Dblclick(index,index2){
