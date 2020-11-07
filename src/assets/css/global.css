@@ -58,7 +58,11 @@ body{
 .el-popover__title{
   text-align: center;
 }
-
+.video-Popover{
+  height: 400px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
 .el-pagination__jump .el-input__inner{
   padding: 0 3px !important;
 }

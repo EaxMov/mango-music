@@ -281,4 +281,7 @@ export default {
   cursor: pointer;
   color: #c1c1c4;
 }
+el-popover{
+  height: 200px !important;
+}
 </style>
