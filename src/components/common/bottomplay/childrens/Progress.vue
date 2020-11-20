@@ -37,6 +37,7 @@ export default {
     })
     this.$bus.$on('timeupdate',res => { //接收运动时间
     this.currentStartTime = res
+    this.progressBarLength = Number(parseInt(this.$refs.progressRunRef.offsetWidth)) - 7  //获取时间的同时每次都获取进度条长度，解决分辨率缩放BUG
       if(this.isDrop){  //检测是否为拖拽状态
         this.currentTime = Number(res)
         this.leaveTime = Number(parseInt(this.progressBarLength * (this.currentTime / this.duration))) //已走运动路程
@@ -47,7 +48,7 @@ export default {
   mounted() { //元素挂载完时获取进度条总长度
     this.$nextTick(() => { //下一次渲染完再获取宽度，不然会有偏差
     setTimeout(() => {
-      this.progressBarLength = Number(parseInt(this.$refs.progressRunRef.offsetWidth)) /* 17是滚动条的宽度！！！坑 */
+      // this.progressBarLength = Number(parseInt(this.$refs.progressRunRef.offsetWidth)) - 7 /* 17是滚动条的宽度！！！坑 */
     }, 100);
     })
   },
