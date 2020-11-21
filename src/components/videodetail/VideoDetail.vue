@@ -98,12 +98,7 @@ export default {
     };
   },
   created() {
-    const id = this.$route.query.id
-    this._getVideoUrl(id)
-    this._getVideoMp3Detail(id)
-    this._getVideoComment(id)
-    this._getVideoRelated(id)
-
+    this._initData()
     this.$bus.$on('hideNomalComment', (bl, id) => { //切换全部评论盒子和个别评论id的显示
       if (this.currentCommentId === id) { return }
       this.showNomalCommentBox = bl  //如果传过来的事件为真，则代表不需要个别评论盒子，清空id，隐藏个别评论盒子
@@ -118,6 +113,13 @@ export default {
     })
   },
   methods: {
+    _initData() {
+      const id = this.$route.query.id
+      this._getVideoUrl(id)
+      this._getVideoMp3Detail(id)
+      this._getVideoComment(id)
+      this._getVideoRelated(id)
+    },
     async _getVideoUrl(id) {
       await getVideoUrl(id).then((res) => {
         if (res.data.code !== 200) { return this.$message.error('获取音乐链接失败') }
@@ -176,11 +178,7 @@ export default {
   },
   watch: {
     idchange() {
-      const id = this.$route.query.id
-      this._getVideoUrl(id)
-      this._getVideoMp3Detail(id)
-      this._getVideoComment(id)
-      this._getVideoRelated(id)
+      this._initData()
     }
   },
   filters: {
