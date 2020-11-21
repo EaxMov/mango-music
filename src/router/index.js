@@ -12,6 +12,8 @@ const SingerDetail = () => import('@/components/singerdetail/SingerDetail')
 const AblumSheet = () => import('@/components/ablumsheet/AblumSheet')
 const Search = () => import('@/components/search/Search')
 const Login = () => import('@/components/login/Login')
+const VideoDetail = () => import('@/components/videodetail/VideoDetail')
+const MvDetail = () => import('@/components/mvdetail/MvDetail')
 
 Vue.use(VueRouter)
 
@@ -69,6 +71,16 @@ Vue.use(VueRouter)
         path:'/mango-music/search',
         name:'Search',
         component:Search
+      },
+      {
+        path:'/mango-music/video-detail',
+        name:'VideoDetail',
+        component:VideoDetail
+      },
+      {
+        path:'/mango-music/mv-detail',
+        name:'MvDetail',
+        component:MvDetail
       }
     ]
   },

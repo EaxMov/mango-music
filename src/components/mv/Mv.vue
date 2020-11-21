@@ -56,7 +56,8 @@ export default {
               playCount:item.playCount,
               artistName:item.artists[0].name,
               duration:item.duration,
-              name:item.name
+              name:item.name,
+              id:item.id
             }
           }))
           this.busy = false

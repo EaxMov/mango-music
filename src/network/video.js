@@ -40,3 +40,31 @@ export function getVideoDetail(id,offset=0){  //video视频分类下的视频
   })  
 }
 
+export function getVideoUrl(id){ //video播放链接
+  return request({
+    url: `/video/url?id=${id}`
+  })
+}
+
+export function getVideoMp3Detail(id){ //video详情
+  return request({
+    url: `/video/detail?id=${id}`
+  })
+}
+
+export function getVideoComment(id, offset = 0,limit = 20){ //video评论详情
+  return request({
+    url: `/comment/video?id=${id}`,
+    params:{
+      limit,
+      offset,
+      timestamp: new Date().getTime()
+    }
+  })
+}
+
+export function getVideoRelated(id){ //video相关推荐
+  return request({
+    url: `/related/allvideo?id=${id}`
+  })
+}

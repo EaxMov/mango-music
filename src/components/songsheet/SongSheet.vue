@@ -103,9 +103,6 @@ export default {
   created() {
     this.getdata()
   },
-  watch: {
-    
-  },
   methods: {
     showAll(title,content){
       this.$alert(content, title, {

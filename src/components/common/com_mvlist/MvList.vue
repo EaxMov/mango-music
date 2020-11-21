@@ -1,7 +1,7 @@
 <template>
   <div class="MvListBox">
     <ul class="mvlist" v-if="mvlistArr  && mvlistArr.length>0">
-      <li v-for="item in mvlistArr">
+      <li v-for="item in mvlistArr" @click="goDetail(item)">
         <div class="cover">
           <div class="publishitime" v-if="showPublishTime">{{item.publishTime}}</div>
           <div class="image">
@@ -38,9 +38,32 @@ export default {
       default: [],
     },
     showPublishTime: {
-      type:Boolean,
-      default:true
-    }
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    goDetail(item) {
+      // if (!window.localStorage.getItem('info')) {
+      //   this.$message.error('请先登录')
+      //   return
+      // }
+      if (item.vid) {
+        this.$router.push({
+          path: "/mango-music/video-detail",
+          query: {
+            id: item.vid,
+          },
+        });
+      } else {
+        this.$router.push({
+          path: "/mango-music/mv-detail",
+          query: {
+            id: item.id,
+          },
+        });
+      }
+    },
   },
   filters: {
     playCount(count) {
