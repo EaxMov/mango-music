@@ -1,14 +1,19 @@
 <template>
   <div class="undefined" v-else>
     <div class="bearlogo"><img src="~@/assets/img/undefined.png" alt=""></div>
-    <p>空空如也~~</p>
+    <p>{{title}}</p>
   </div>
 </template>
 
 <script>
 export default {
   name:'empty',
-
+  props:{
+    title:{
+      type:String,
+      default:'空空如也~~'
+    }
+  }
 }
 </script>
 

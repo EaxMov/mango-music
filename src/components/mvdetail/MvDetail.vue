@@ -197,14 +197,11 @@ export default {
       this._getMvComment(this.$route.query.id, this.offset)
     }
   },
-  computed: {
-    idchange() { //监听id变化，重载刷新数据
-      return this.$route.query.id
-    }
-  },
   watch: {
-    idchange() {
-      this._initData()
+    $route(newVal, oldVal) {
+      if (newVal.query.id) {
+        this._initData()
+      }
     }
   },
   filters: {

@@ -27,7 +27,7 @@
           </span>
         </div>
         <CommentBox v-show="showNomalCommentBox" />
-        <CommentList title="热门评论"  @reloadZan="reloadZan" :commentList="hotCommentsList" :currentCommentId="currentCommentId" />
+        <CommentList title="热门评论" @reloadZan="reloadZan" :commentList="hotCommentsList" :currentCommentId="currentCommentId" />
         <CommentList title="最新评论" @reloadZan="reloadZan" :commentList="nalMalCommentsList" :currentCommentId="currentCommentId" />
       </div>
       <div class="pagination">
@@ -88,7 +88,7 @@ export default {
     return {
       videoUrl: "",
       videoDetail: null,
-      videoInfo:null,
+      videoInfo: null,
       nalMalCommentsList: [],
       hotCommentsList: [],
       relateList: [],
@@ -193,18 +193,15 @@ export default {
         this._getVideoInfo(this.$route.query.id)
       })
     },
-    reloadZan(){
-      this._getVideoComment(this.$route.query.id,this.offset)
-    }
-  },
-  computed: {
-    idchange() { //监听id变化，重载刷新数据
-      return this.$route.query.id
+    reloadZan() {
+      this._getVideoComment(this.$route.query.id, this.offset)
     }
   },
   watch: {
-    idchange() {
-      this._initData()
+    $route(newVal, oldVal) {
+      if (newVal.query.id) {
+        this._initData()
+      }
     }
   },
   filters: {

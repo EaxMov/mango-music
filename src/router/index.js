@@ -14,6 +14,7 @@ const Search = () => import('@/components/search/Search')
 const Login = () => import('@/components/login/Login')
 const VideoDetail = () => import('@/components/videodetail/VideoDetail')
 const MvDetail = () => import('@/components/mvdetail/MvDetail')
+const Personal = () => import ('@/components/personal/Personal')
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,11 @@ Vue.use(VueRouter)
         path:'/mango-music/mv-detail',
         name:'MvDetail',
         component:MvDetail
+      },
+      {
+        path:'/mango-music/personal',
+        name:'Personal',
+        component:Personal
       }
     ]
   },

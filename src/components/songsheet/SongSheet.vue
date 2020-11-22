@@ -37,7 +37,7 @@
     <div class="subscribers shadow boxlayout">
       <div class="title"><a>歌单收藏者</a> </div>
       <ul v-loading="!subscribers" class="subscribersList" v-if="subscribers && subscribers.length>0">
-        <li v-for="item in subscribers">
+        <li v-for="item in subscribers" @click="handleUserInfo(item.userId)">
           <div class="avatarPic" ><img v-lazy="item.avatarUrl + '?param=50y50'" :title="item.nickname"></div>
         </li>
       </ul>
@@ -63,9 +63,9 @@
       <div class="title" v-if="userComent.type === 0"><a>精彩评论</a> </div>
       <div class="title" v-else><a>最新评论</a> </div>
       <div class="comendBox" v-if="userComent.comments && userComent.comments.length>0">
-        <ul class="comendList" key="">
+        <ul class="comendList">
           <li v-for="item in userComent.comments" class="comitem">
-            <div class="userAvator"><img v-lazy="item.user.avatarUrl  + '?param=50y50' " alt=""></div>
+            <div class="userAvator" @click="handleUserInfo(item.user.userId)"><img v-lazy="item.user.avatarUrl  + '?param=50y50' " alt=""></div>
             <div class="userinfo">
               <h5>{{item.user.nickname}}<a>{{item.time | getAgoAt}}</a></h5>
               <p>{{item.content}}</p>
@@ -114,6 +114,7 @@ export default {
       })
     },
     SelectRelateList(id){
+      console.log(id);
       this.$router.push({
         path:'/mango-music/songsheet',
         query:{
@@ -169,6 +170,14 @@ export default {
         this.getrelated()
         this.getUserComent()
       }
+    },
+    handleUserInfo(id){
+      this.$router.push({
+        path:'/mango-music/personal',
+        query:{
+          id
+        }
+      })
     }
   },
   computed: {
@@ -436,6 +445,7 @@ ul{
   height: 45px;
   border-radius: 50%;
   margin-right: 15px;
+  cursor: pointer;
 }
 .userinfo{
   flex:1;

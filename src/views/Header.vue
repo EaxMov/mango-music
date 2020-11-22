@@ -62,7 +62,8 @@ export default {
     },
     handleCommand(index){
       switch(index){
-        case '3' : window.localStorage.removeItem('cookie');console.log(1);this.reload(); break
+        case '0' : this.$router.push({path:"/mango-music/personal"}) ;break;
+        case '3' : window.localStorage.removeItem('cookie');window.localStorage.removeItem('info');this.reload(); break
       }
     }
   },
@@ -81,7 +82,7 @@ export default {
   watch: {
     watchpath(){
       let _path = this.watchpath
-      if(_path.search('songsheet') !== -1 || _path.search('singer-detail') !== -1){
+      if(_path.indexOf('recomendmusic') === -1 && _path.indexOf('rank') === -1 && _path.indexOf('musiclist') === -1 && _path.indexOf('singer') === -1 && _path.indexOf('video') === -1 && _path.indexOf('mv') === -1){
         this.currentIndex = ''
       }
     }
