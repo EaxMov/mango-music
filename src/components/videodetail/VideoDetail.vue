@@ -13,10 +13,10 @@
           <span>发布：{{videoDetail.publishTime | formatDate}}</span>
           <span>播放次数：{{videoDetail.playTime | playCount}}</span>
         </p>
-        <div class="follow">
-          <div><i class="iconfont icon-Like"></i>{{videoDetail.praisedCount}}</div>
+        <div class="follow" v-if="videoInfo && Object.keys(videoInfo).length > 0">
+          <div @click="_LikedSouce"><i class="iconfont icon-Like" :style="videoInfo.liked ? 'color:#fa2800' : ''"></i>{{videoInfo.likedCount}}</div>
           <div><i class="iconfont icon-Star"></i> {{videoDetail.subscribeCount}}</div>
-          <div><i class="iconfont icon-Share-"></i> {{videoDetail.shareCount}}</div>
+          <div><i class="iconfont icon-Share-"></i> {{videoInfo.shareCount}}</div>
         </div>
       </div>
       <div class="video-comment">
@@ -27,8 +27,8 @@
           </span>
         </div>
         <CommentBox v-show="showNomalCommentBox" />
-        <CommentList title="热门评论" :commentList="hotCommentsList" :currentCommentId="currentCommentId" />
-        <CommentList title="最新评论" :commentList="nalMalCommentsList" :currentCommentId="currentCommentId" />
+        <CommentList title="热门评论"  @reloadZan="reloadZan" :commentList="hotCommentsList" :currentCommentId="currentCommentId" />
+        <CommentList title="最新评论" @reloadZan="reloadZan" :commentList="nalMalCommentsList" :currentCommentId="currentCommentId" />
       </div>
       <div class="pagination">
         <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" hide-on-single-page layout="total, prev, pager, next,jumper" :total="commentTotal">
@@ -73,7 +73,8 @@
 </template>
 
 <script>
-import { getVideoUrl, getVideoMp3Detail, getVideoComment, getVideoRelated } from "@/network/video";
+import { getVideoUrl, getVideoMp3Detail, getVideoComment, getVideoRelated, getVideoInfo } from "@/network/video";
+import { LikedSouce } from "@/network/comment";
 import { playCount, formatDate } from "@/common/js/utils";
 import CommentBox from '@/components/common/com_commentBox/CommentBox'
 import CommentList from '@/components/common/com_commentList/CommenList'
@@ -87,6 +88,7 @@ export default {
     return {
       videoUrl: "",
       videoDetail: null,
+      videoInfo:null,
       nalMalCommentsList: [],
       hotCommentsList: [],
       relateList: [],
@@ -108,8 +110,9 @@ export default {
       }
     })
     this.$bus.$on('reloadCommend', () => {
-      this._getVideoComment(id)
+      this._getVideoComment(this.$route.query.id)
       this.currentCommentId = ''
+      this.showNomalCommentBox = true
     })
   },
   methods: {
@@ -117,6 +120,7 @@ export default {
       const id = this.$route.query.id
       this._getVideoUrl(id)
       this._getVideoMp3Detail(id)
+      this._getVideoInfo(id)
       this._getVideoComment(id)
       this._getVideoRelated(id)
     },
@@ -139,6 +143,12 @@ export default {
             id: item.id
           }
         })
+      })
+    },
+    async _getVideoInfo(id) {
+      await getVideoInfo(id).then(res => {
+        if (res.data.code !== 200) { return this.$message.error('获取点赞评论收藏失败') }
+        this.videoInfo = res.data
       })
     },
     async _getVideoComment(id, offset) {
@@ -169,6 +179,22 @@ export default {
           id
         }
       })
+    },
+    async _LikedSouce() {
+      const userInfo = JSON.parse(window.localStorage.getItem('info'))
+      if (!userInfo) return this.$message.error('没登陆点什么👍')
+      const t = this.videoInfo.liked !== true ? 1 : 0
+      await LikedSouce(this.$route.query.id, t, 5).then(res => {
+        if (res.data.code === 200 && t === 1) {
+          this.$message.success('点赞成功')
+        } else {
+          this.$message.error('取消点赞')
+        }
+        this._getVideoInfo(this.$route.query.id)
+      })
+    },
+    reloadZan(){
+      this._getVideoComment(this.$route.query.id,this.offset)
     }
   },
   computed: {

@@ -47,16 +47,16 @@ export default {
     handleComment() {
       if (this.commentContent === '') {
         this.$message.error('哥，你什么都没写呀，评论个屁！')
+        return 
       }
+      const pageType = this.$route.path.indexOf('mv-detail') !== -1 ?  1 : 5
       if (this.commentType === 1 && this.$route.query.id) {
-        sendComment(1, 5, this.$route.query.id, this.commentContent,).then(res => {
-          console.log("全体评论", res);
+        sendComment(1, pageType, this.$route.query.id, this.commentContent,).then(res => {
           if (res.data.code !== 200) { return this.$message.error('评论失败') }
           this._reload()
         })
       } else if (this.commentType === 2 && this.currentCommentId) {
-        console.log("22222",this.currentCommentId);
-        sendComment(2, 5, this.$route.query.id, this.commentContent, this.currentCommentId).then(res => {
+        sendComment(2, pageType, this.$route.query.id, this.commentContent, this.currentCommentId).then(res => {
           if (res.data.code !== 200) { return this.$message.error('评论失败') }
           this._reload()
         })

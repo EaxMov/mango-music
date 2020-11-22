@@ -13,7 +13,7 @@
               <a>{{item.time | getAgoAt}}</a>
             </span>
             <div class="active">
-              <i class="iconfont icon-zan"></i>
+              <i class="iconfont icon-zan" :style="currentCommentId === item.commentId && isLike || item.liked ? 'color:#fa2800;' : ''" @click="_likeComment(item)"></i>
               <span>({{item.likedCount}})</span>
               <i class="iconfont icon-xiaoxi" @click="handleSendComment(item.commentId)"></i>
             </div>
@@ -24,7 +24,7 @@
               <a>@{{reItem.user.nickname}}</a>：{{reItem.content }}
             </div>
           </div>
-          <CommentBox  v-if="currentCommentId === item.commentId" :commentType="2" placeholder="评论啥好呢~~" :currentCommentId="currentCommentId"/>
+          <CommentBox v-if="currentCommentId === item.commentId" :commentType="2" placeholder="评论啥好呢~~" :currentCommentId="currentCommentId" />
         </div>
 
       </li>
@@ -34,6 +34,7 @@
 
 <script>
 import { getAgoAt } from '@/common/js/utils'
+import { likeComment } from '@/network/comment'
 import CommentBox from '@/components/common/com_commentBox/CommentBox'
 export default {
   name: 'commenList',
@@ -42,6 +43,7 @@ export default {
   },
   data() {
     return {
+      isLike: false
     }
   },
   props: {
@@ -52,17 +54,32 @@ export default {
       type: Array,
       default: () => []
     },
-    currentCommentId:{
-      type:[String,Number]
+    currentCommentId: {
+      type: [String, Number]
     }
   },
   methods: {
-    handleSendComment(commendId){
+    handleSendComment(commendId) {
       const userInfo = JSON.parse(window.localStorage.getItem('info'))
-      if(userInfo === null){
+      if (userInfo === null) {
         this.$message.error('没登陆你评论啥？？？')
       }
-      this.$bus.$emit('hideNomalComment',false,commendId)
+      this.$bus.$emit('hideNomalComment', false, commendId)
+    },
+    _likeComment(item) {
+      const userInfo = JSON.parse(window.localStorage.getItem('info'))
+      const t = item.liked !== true ? 1 : 0
+      const pageType = this.$route.path.indexOf('mv-detail') !== -1 ? 1 : 5
+      if (!userInfo) return this.$message.error('没登陆点什么👍')
+      likeComment(this.$route.query.id, item.commentId, t, pageType).then(res => {
+        if (res.data.code === 200 && t === 1) {
+          this.isLike = true
+          this.$message.success('点赞成功')
+        } else {
+          this.$message.error('取消点赞')
+        }
+        this.$emit('reloadZan')
+      })
     }
   },
   filters: {

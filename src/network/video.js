@@ -63,8 +63,17 @@ export function getVideoComment(id, offset = 0,limit = 20){ //video评论详情
   })
 }
 
-export function getVideoRelated(id){ //video相关推荐
+export function getVideoRelated(id){ //video相关
   return request({
     url: `/related/allvideo?id=${id}`
+  })
+}
+
+export function getVideoInfo(id){ //video相关
+  return request({
+    url: `/video/detail/info?vid=${id}`,
+    params:{
+      timestamp: new Date().getTime()
+    }
   })
 }
