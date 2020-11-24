@@ -7,7 +7,8 @@ const state =  {
   Singerinfo:{}, //单个歌手的信息
   PlayModelList:'',//当前播放的是哪个模块
   model:1,//播放模式
-  userId:'' //用户ID
+  userId:'', //用户ID
+  historyMusicList:[] //历史播放歌曲
 }
 
 export default state

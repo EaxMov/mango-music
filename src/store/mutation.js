@@ -7,7 +7,8 @@ import {
   Updata_lcrArrs,
   Updata_Playing,
   Updata_Model,
-  Updata_UserId
+  Updata_UserId,
+  Updata_HistoryMusicList
 } from "./mutation-types"
 
 
@@ -38,5 +39,8 @@ export default {
   },
   [Updata_UserId](state,id){
     state.userId = id
+  },
+  [Updata_HistoryMusicList](state,obj){
+    state.historyMusicList = obj
   }
 }
