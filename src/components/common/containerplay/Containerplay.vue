@@ -69,7 +69,7 @@
 
       </div>
 
-      <div class="hha">123</div>
+      <!-- <div class="hha">123</div> -->
     </div>  
   </div>
 </div>
@@ -208,7 +208,7 @@ export default {
 .rightcontainer{
   width: 84%;
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 .Cone{
   display: flex;
@@ -223,9 +223,12 @@ export default {
 }
 .Cringht{
   width: 40%;
-  height: 100vh;
+  height:calc(100vh - 80px - 80px);
   overflow: hidden;
   padding-left: 65px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 .covepic{
   width: 205px;

@@ -2,7 +2,9 @@
   <div class="historyBox shadow">
     <div class="title">
       播放历史
-      <i class="iconfont icon-lajitong" title="清空"></i>
+      <el-popconfirm title="确定清空全部列表吗？" ref="deleteAll" popper-class="deleteOnce" @onConfirm="confirm">
+        <i class="iconfont icon-lajitong" title="清空" slot="reference"></i>
+      </el-popconfirm>
     </div>
     <ul>
       <li v-for="(item,index) in musicList" @click="handlePlay(item)">
@@ -37,9 +39,22 @@ export default {
     handlePlay(item) {
       this.$bus.$emit('BtPlayisShowEvent', item)
     },
-    handleDelete(index){
-      this.localList.splice(index,1)
-      window.localStorage.setItem('PlayHistory',JSON.stringify(this.localList))
+    handleDelete(index) {
+
+      this.localList.splice(index, 1)
+      window.localStorage.setItem('PlayHistory', JSON.stringify(this.localList))
+    },
+    clear() {
+      if (this.localList.length === 0) {
+        return this.$message.warning('删空气吗，什么都没有呀')
+      }
+      this.$store.commit('historyMusicList', '')
+      window.localStorage.removeItem('PlayHistory')
+      this.$message.success('删除成功')
+    },
+    confirm() {
+      console.log(1);
+      this.clear()
     }
   },
   watch: {
@@ -55,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .historyBox {
   background-color: rgba(255, 255, 255, 0.95);
   width: 460px;
@@ -134,5 +149,8 @@ export default {
       }
     }
   }
+}
+.deleteOnce {
+  z-index: 9999 !important;
 }
 </style>

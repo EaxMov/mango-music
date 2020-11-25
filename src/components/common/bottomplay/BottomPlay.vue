@@ -43,7 +43,14 @@ export default {
   created() {
     this.$bus.$on('BtPlayisShowEvent', (MusicConfig) => {
       if (MusicConfig.fee === 4) { return notifyToast(this, '这首歌是收费的QAQ', 'error', 70, "《" + MusicConfig.name + '》') }  //开始先检测是不是收费歌曲
-      if (MusicConfig.fee === 1) { return notifyToast(this, '这首歌是VIP歌曲QAQ', 'error', 70, "《" + MusicConfig.name + '》') }  //开始先检测是不是VIP歌曲
+      //开始先检测是不是VIP歌曲
+      if (MusicConfig.fee === 1 && this.vipType !== 11) {
+        return notifyToast(this, '这首歌是VIP歌曲QAQ', 'error', 70, "《" + MusicConfig.name + '》')
+      }else if(MusicConfig.fee === 1 && this.vipType === 11){
+        notifyToast(this, '尊享VIP歌曲~', 'success', 70, "《" + MusicConfig.name + '》')
+      }
+
+      console.log(MusicConfig.fee, this.vipType);
       if (!this.BtPlayisShow) { this.BtPlayisShow = true } //如果底部播放器是显示状态，就不需要再显示出来了
       if (this.$store.state.PlayingMusicConfig.id == MusicConfig.id && this.$store.state.model === 1) { //如果点击播放的歌曲与上一首的id相同，则不再重复获取音乐MP3链接
         notifyToast(this, '播放歌曲重复啦~~~~', 'warning', 70) //提示框
@@ -122,13 +129,15 @@ export default {
         if (res.data.code !== 200) return this.$message.error('获取歌曲歌词失败')
         // var lrc = DealLrc(res.data.lrc.lyric)  //歌词处理js -> 手动封装
 
-        if (res.data.nolyric) { //判断有没有歌词
+        if (res.data.lrc && res.data.lrc.lyric) { //判断有无歌词
+          console.log(res.data);
+          this.lrc = new Lyric(res.data.lrc.lyric, this.lyricHandle)
+        } else {
           console.log("无歌词");
           this.lrc = new Lyric('[00:00.000]暂无歌词，请您欣赏', this.lyricHandle)
           this.$bus.$emit('playing-lyric', '暂无歌词，请您欣赏', '')
-        } else {
-          this.lrc = new Lyric(res.data.lrc.lyric, this.lyricHandle)
         }
+
         if (this.$store.state.playing) {
           this.lrc.play()
           console.log("开始重新播放了");
@@ -136,7 +145,7 @@ export default {
         this.$store.commit('UpdatelrcData', this.lrc)
 
         if (this.lrc.lines.length > 0 && !res.data.nolyric) { //当歌词回调还未执行时，先行引用默认歌词
-          this.$bus.$emit('playing-lyric', this.lrc.lines[0].txt, this.lrc.lines[1].txt)
+          this.$bus.$emit('playing-lyric', this.lrc.lines[0].txt, this.lrc.lines[1] ? this.lrc.lines[1].txt : '')
         } else {
           this.$bus.$emit('playing-lyric', '暂无歌词', '')
         }
@@ -176,7 +185,7 @@ export default {
       this.$bus.$emit('LightNum', lineNum, txt)  //滚动
     },
     setHistoryList(music) { //设置本地播放历史
-    console.log(music);
+      console.log(music);
       let musicObj = {}
       const album = {}
       musicObj.id = music.id
@@ -196,11 +205,11 @@ export default {
       } else {
         tempArr = localMusic.filter(item => item.id !== musicObj.id)
         tempArr.unshift(musicObj)
-        if(tempArr.length > 100){
+        if (tempArr.length > 100) {
           tempArr.shift()
         }
       }
-      this.$store.commit('historyMusicList',tempArr)
+      this.$store.commit('historyMusicList', tempArr)
       window.localStorage.setItem('PlayHistory', JSON.stringify(tempArr))
 
     }
@@ -211,7 +220,13 @@ export default {
         this.$bus.$emit('BtPlayisShow', this.BtPlayisShow)  //如何播放器显示，则Container内容margin-bottom 60px
       }
     }
-  }
+  },
+  computed: {
+    vipType() {
+      const userInfo = JSON.parse(window.localStorage.getItem('info')).profile.vipType
+      return userInfo ? userInfo : ''
+    },
+  },
 }
 </script>
 

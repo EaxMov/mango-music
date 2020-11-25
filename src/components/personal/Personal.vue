@@ -48,7 +48,7 @@
             <div class="tab">
               <span :class="{acitve:recordType === 1}" @click="handleChangeRecordType(1)">最近一周</span>
               <span class="line"></span>
-              <span :class="{acitve:recordType === 2}" @click="handleChangeRecordType(0)">所有时间</span>
+              <span :class="{acitve:recordType === 0}" @click="handleChangeRecordType(0)">所有时间</span>
             </div>
           </div>
           <MusicList v-if="musicList.length > 0 " :songsList="musicList" :share="false" :collection="false" />

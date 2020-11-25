@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import {Message,Button,Loading,Notification,MessageBox,Cascader,Pagination,Popover,Form,FormItem,Input,Dropdown,DropdownMenu,DropdownItem} from 'element-ui'
+import {Popconfirm,Message,Button,Loading,Notification,MessageBox,Cascader,Pagination,Popover,Form,FormItem,Input,Dropdown,DropdownMenu,DropdownItem} from 'element-ui'
 Vue.use(Button)
 Vue.use(Loading)
 Vue.use(Cascader)
@@ -11,6 +11,7 @@ Vue.use(Input)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
+Vue.use(Popconfirm)
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox.alert
