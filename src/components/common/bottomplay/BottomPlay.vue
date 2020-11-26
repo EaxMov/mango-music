@@ -2,7 +2,7 @@
   <transition name="fade">
     <div class="BottomPlay shadow" v-show="BtPlayisShow">
       <Cover :PlayingMusicConfig="$store.state.PlayingMusicConfig" />
-      <Controls :PlayerMusicMP3="PlayerMusicMP3" ref="ControlsRef" />
+      <Controls :PlayerMusicMP3="PlayerMusicMP3" ref="ControlsRef"/>
       <Progress v-if="$store.state.PlayingMusicConfig.id" :Duration="$store.state.PlayingMusicConfig.dt" />
       <Volume v-if="$store.state.PlayingMusicConfig.id" />
       <RightFunMeu />
@@ -46,7 +46,7 @@ export default {
       //开始先检测是不是VIP歌曲
       if (MusicConfig.fee === 1 && this.vipType !== 11) {
         return notifyToast(this, '这首歌是VIP歌曲QAQ', 'error', 70, "《" + MusicConfig.name + '》')
-      }else if(MusicConfig.fee === 1 && this.vipType === 11){
+      } else if (MusicConfig.fee === 1 && this.vipType === 11) {
         notifyToast(this, '尊享VIP歌曲~', 'success', 70, "《" + MusicConfig.name + '》')
       }
 
@@ -65,8 +65,7 @@ export default {
       }
 
 
-
-      this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
+        this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
 
       //底部播放器
       this.getMusicDetail(MusicConfig.id) //歌曲的详细信息
@@ -181,7 +180,7 @@ export default {
     //   this.$store.commit('UpdatalcrArrs',this.allKeys)
     // },
 
-    lyricHandle({ lineNum, txt }) { //歌词插件回调函数
+    lyricHandle({ lineNum, txt }) { //歌词插件回调函数 //BUG
       this.$bus.$emit('LightNum', lineNum, txt)  //滚动
     },
     setHistoryList(music) { //设置本地播放历史
@@ -223,9 +222,18 @@ export default {
   },
   computed: {
     vipType() {
-      const userInfo = JSON.parse(window.localStorage.getItem('info')).profile.vipType
-      return userInfo ? userInfo : ''
+      const userInfo = JSON.parse(window.localStorage.getItem('info'))
+      return userInfo  &&  userInfo.profile ? userInfo.profile.vipType : ''
     },
+  },
+  destroyed() {
+    console.log("底部播放器销毁了");
+    this.$bus.$off('LightNum')
+    this.$bus.$off('BtPlayisShowEvent')
+    this.$bus.$off('progressDrap')
+    this.$bus.$off('musicloopEnd')
+    this.$bus.$off('watchlrcplaying')
+    this.$bus.$off('playing-lyric')
   },
 }
 </script>

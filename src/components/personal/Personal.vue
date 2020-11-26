@@ -195,7 +195,7 @@ export default {
       position: relative;
       width: 100%;
       height: 350px;
-      background: url("~@/assets/img/personal_bg.jpg");
+      background: url("https://file.moetu.org/images/2020/11/25/personal_bg720fdeeb63132785.jpg");
       background-position: 100% 100%;
       background-size: cover;
       background-attachment: fixed;

@@ -172,11 +172,11 @@ export default {
   position: relative;
 }
 .bg1{
-  background: url('~@/assets/img/bg1.jpg') no-repeat;
+  background: url('https://file.moetu.org/images/2020/11/25/bg1ea11cd75762df235.jpg') no-repeat;
   background-size: cover;
 }
 .bg2{
-  background: url('~@/assets/img/bg2.jpg') no-repeat;
+  background: url('https://file.moetu.org/images/2020/11/25/bg25453fcb547f3d8e7.jpg') no-repeat;
   background-size: cover;
 }
 .bgarrow{

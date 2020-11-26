@@ -62,6 +62,9 @@ export default {
       }
     }
   },
+  destroyed() {
+     this.$bus.$off('volume')
+  },
 }
 </script>
 

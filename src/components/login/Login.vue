@@ -3,7 +3,7 @@
   <div class="cover" ref="BgRef" style="opacity: 1;"></div>
   <div :class="{blur:blur}"  @click="getblur"></div>
   <div class="content" :class="{bgcolor:blur}">
-    <img src="~@/assets/img/mangologo.png" alt="" class="logo">
+    <img src="https://file.moetu.org/images/2020/11/25/mangologoc02f8747ae8d4ca4.png?params=20y20" alt="" class="logo">
     <p class="logintitle">Login</p>
     <div class="loginbox">
       <el-form :model="userinfo" :rules="rules" ref="ruleForm" >
@@ -60,7 +60,9 @@ export default {
           login(this.userinfo.username,this.userinfo.password).then(res => {
             if(res.data.code !==200){return this.$message.error(res.data.msg)}
             this.$message.success('登陆成功')
-            this.$router.go(-1)
+            this.$router.push({
+              path:'/mango-music/recomendmusic'
+            })
             window.localStorage.setItem('info',JSON.stringify(res.data))
             window.localStorage.setItem('cookie',res.data.cookie)
           }).catch(err => {
@@ -91,7 +93,7 @@ export default {
 .cover{
   width: 100%;
   height: 100%;
-  background: url('~@/assets/img/login_bg1.jpg') no-repeat;
+  background: url('https://file.moetu.org/images/2020/11/25/login_bg126a32f968fde34c7.jpg') no-repeat;
   background-size: cover;
   background-attachment: fixed;
   position: fixed;

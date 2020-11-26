@@ -87,7 +87,11 @@ export default {
     reFormatTime:res => {
       return reFormatTime(res)
     }
-  }
+  },
+  destroyed() {
+     this.$bus.$off('timeupdate')
+     this.$bus.$off('getDuration')
+  },
   
 }
 </script>

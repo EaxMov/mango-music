@@ -153,7 +153,7 @@ export default {
 .searchTop {
   height: 250px;
   width: 100%;
-  background: url("~@/assets/img/searchbg_1.jpg") no-repeat;
+  background: url("https://file.moetu.org/images/2020/11/25/searchbg_1bef015f5f5bad664.jpg") no-repeat;
   background-size: cover;
   background-position: 0 52%;
   background-attachment: fixed;

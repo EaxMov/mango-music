@@ -98,6 +98,7 @@ export default {
       this.similardata = res
     })
     this.$bus.$on('bigplayshow',() => {
+      console.log("我触发了大播放器的隐藏显示切换");
       this.bigplayshow = !this.bigplayshow
       if(this.bigplayshow){  //阻止滚动穿透
         document.body.style.overflow = 'hidden'
@@ -132,7 +133,6 @@ export default {
   },  
   methods: {
     DBselect(index){
-      console.log(this.similardata[index]);
       this.$bus.$emit('BtPlayisShowEvent',this.similardata[index])
       this.$bus.$emit('currentIndex',index) //发送当前点击的index索引
 
@@ -163,7 +163,15 @@ export default {
     showDate:value =>{
       return formatDate(new Date(value),'mm:ss')
     }
-  }
+  },
+  destroyed() {
+    document.body.style.overflow = ''
+    this.$bus.$off('similardata')
+    this.$bus.$off('bigplayshow')
+    this.$bus.$off('LightNum')
+    this.$bus.$off('isloopStart')
+    this.$bus.$off('playing-lyric')
+  },
 }
 </script>
 
