@@ -10,7 +10,7 @@
     <div class="bgball bg-animation2"></div>
     <div class="bgball bg-animation3"></div>
     <div class="bgball bg-animation4"></div>
-    <el-backtop target=".Index" :visibility-height="300">
+    <el-backtop target=".Index" :visibility-height="300" :bottom="170">
       <div class="iconfont icon-262">
       </div>
     </el-backtop>
@@ -41,11 +41,6 @@ export default {
   height: 100%;
 }
 .el-backtop {
-  bottom: 170px !important;
-  /* background-color: transparent !important; */
-  /* width: 0;
-  height: 0; */
-  /* box-shadow: none; */
   right: 2.5% !important;
 }
 .icon-262{
