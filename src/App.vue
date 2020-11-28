@@ -5,18 +5,18 @@
 </template>
 <script>
 export default {
-  provide(){
+  provide() {
     return {
-      reload:this.reload
+      reload: this.reload
     }
   },
   data() {
     return {
-      isRouterAlive:true
+      isRouterAlive: true
     }
   },
   methods: {
-    reload(){
+    reload() {
       this.isRouterAlive = false
       this.$nextTick(() => {
         this.isRouterAlive = true
@@ -27,15 +27,19 @@ export default {
 </script>
 <style>
 @import "~@/assets/css/global.css";
+html,
+body {
+  height: 100%;
+}
 #app {
   width: 100%;
   height: 100%;
 }
 ::-webkit-scrollbar {
-  width: 0 ;
+  width: 0;
 }
 ::-webkit-scrollbar {
-  width: 0 ;
+  width: 0;
   height: 0;
 }
 </style>
