@@ -4,7 +4,7 @@
     <div class="cover">
       <div class="coverimg">
         <img v-if="item.picUrl" v-lazy="item.picUrl + '?param=205y205'" alt="" />
-        <img v-else v-lazy="item.coverImgUrl + '?param=205y205'" alt="" />
+        <img v-else-if="item.coverImgUrl" v-lazy="item.coverImgUrl + '?param=205y205'" alt="" />
         <div class="covercount">
           <div class="covercountinfo">
           <i class="iconfont icon-bofangsanjiaoxing"></i>

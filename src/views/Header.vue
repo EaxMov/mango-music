@@ -48,7 +48,12 @@ export default {
       this.currentIndex = index
       switch (index) {
         case 0: this.$router.push('/mango-music/recomendmusic'); break
-        case 1: this.$router.push('/mango-music/rank'); break
+        case 1: 
+        if(this.userinfo === true){
+          this.$message.error('请先登录')
+        }
+        this.$router.push('/mango-music/rank')
+        ; break
         case 2: this.$router.push('/mango-music/musiclist'); break
         case 3: this.$router.push('/mango-music/singer'); break
         case 4: this.$router.push('/mango-music/video'); break

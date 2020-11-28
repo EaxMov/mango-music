@@ -115,6 +115,7 @@ export default {
     // })
 
     this.$bus.$on('LightNum',(line,txt) => {  //滚动歌词小于5不滚动
+      console.log("歌词滚动触发了哦");
       this.currentLineNum = line
       if(line > 6) { 
         let lineEl = this.$refs.lyricline[line - 6]
@@ -165,6 +166,7 @@ export default {
     }
   },
   destroyed() {
+    console.log("大播放器->歌词滚动已经销毁");
     document.body.style.overflow = ''
     this.$bus.$off('similardata')
     this.$bus.$off('bigplayshow')

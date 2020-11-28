@@ -42,6 +42,7 @@ export default {
   },
   created() {
     this.$bus.$on('BtPlayisShowEvent', (MusicConfig) => {
+      console.log("底部播放器->被触发了");
       if (MusicConfig.fee === 4) { return notifyToast(this, '这首歌是收费的QAQ', 'error', 70, "《" + MusicConfig.name + '》') }  //开始先检测是不是收费歌曲
       //开始先检测是不是VIP歌曲
       if (MusicConfig.fee === 1 && this.vipType !== 11) {
@@ -227,7 +228,10 @@ export default {
     },
   },
   destroyed() {
-    console.log("底部播放器销毁了");
+    if(this.lrc){
+      this.lrc.stop()
+    }
+    this.$store.commit('UpdatePlayingMusicConfig', '') 
     this.$bus.$off('LightNum')
     this.$bus.$off('BtPlayisShowEvent')
     this.$bus.$off('progressDrap')

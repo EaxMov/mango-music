@@ -6,7 +6,6 @@
           <div class="publishitime" v-if="showPublishTime">{{item.publishTime}}</div>
           <div class="image">
             <img v-lazy="item.imgurl16v9 + '?param=325y197'" alt="">
-
           </div>
           <div class="count">
             <i class="iconfont icon-bofangsanjiaoxing"></i>
@@ -91,9 +90,11 @@ export default {
   cursor: pointer;
   padding: 0;
 }
-.mvlist .cover {
+.cover {
   position: relative;
-  height: 86.7%;
+  z-index: 2;
+  padding-top: 56%;
+  border-radius: 2px;
 }
 .mvlist li:hover .cover::before {
   font-family: "iconfont";
@@ -106,9 +107,17 @@ export default {
   transform: translate(-50%, -50%);
 }
 .image {
+  /* width: 100%; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
   width: 100%;
+  height: 100%;
+  border-radius: 2px;
 }
 .image img {
+  height: 100%;
   width: 100%;
   border-radius: 2px;
   display: block;
