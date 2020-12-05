@@ -65,8 +65,9 @@ export default {
         this.lrc.stop()
       }
 
-
-        this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
+        //异步移要获取歌曲信息之后。
+        // this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
+        // this.getMusicLyric(MusicConfig.id)  //获取歌词并二次处理歌词
 
       //底部播放器
       this.getMusicDetail(MusicConfig.id) //歌曲的详细信息
@@ -83,7 +84,6 @@ export default {
       }
 
 
-      this.getMusicLyric(MusicConfig.id)  //获取歌词并二次处理歌词
 
       this.getSimilarsongs(MusicConfig.id)  //获取相似歌曲 ->大播放器
 
@@ -122,15 +122,15 @@ export default {
       getMusicMP3(id).then(res => {
         if (res.data.code !== 200) return this.$message.error('获取歌曲详细MP3链接失败')
         this.PlayerMusicMP3 = res.data.data[0]
+        this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
+        this.getMusicLyric(id)  //获取歌词并二次处理歌词
       })
     },
     getMusicLyric(id) {   //歌词
       getMusicLyric(id).then(res => {
         if (res.data.code !== 200) return this.$message.error('获取歌曲歌词失败')
         // var lrc = DealLrc(res.data.lrc.lyric)  //歌词处理js -> 手动封装
-
         if (res.data.lrc && res.data.lrc.lyric) { //判断有无歌词
-          console.log(res.data);
           this.lrc = new Lyric(res.data.lrc.lyric, this.lyricHandle)
         } else {
           console.log("无歌词");

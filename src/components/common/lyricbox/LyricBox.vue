@@ -131,13 +131,16 @@ export default {
 }
 .hiddlen {
   margin-right: 5px;
+  cursor: pointer;
 }
 .reset {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .setColor {
   margin-right: 5px;
+  cursor: pointer;
 }
 .tools {
   position: absolute;

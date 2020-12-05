@@ -40,9 +40,11 @@ export default {
   methods: {
     ControlMiddle(ControlType, from) { //点击按钮播放和暂停
       if (ControlType == 'start') {
-        this.$refs.audio.play()
-        this.$store.commit('UpdataPlaying', true)
-        if (!from) {
+        setTimeout(() => {
+          this.$refs.audio.play()
+          this.$store.commit('UpdataPlaying', true)
+        }, 100);
+        if (!from) {  //判断是否播放的是新歌曲
           this.$bus.$emit('watchlrcplaying')
           console.log("开始触发的中继事件发射");
         }
