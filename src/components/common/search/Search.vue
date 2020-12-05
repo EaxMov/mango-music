@@ -20,7 +20,7 @@
       </ul>
       <div v-show="!changemeu" >
          <div class="historytagsbox">
-           <div class="historyitem" v-for="(item,index) in historytags" @click="selectTags(item)">{{item}}<i class="iconfont icon-close" @click="clearAll(2,index)"></i></div>
+           <div class="historyitem" v-for="(item,index) in historytags" @click="selectTags(item)">{{item}}<i class="iconfont icon-close" @click.stop="clearAll(2,index)"></i></div>
          </div>
          <h4 class="clear" @click="clearAll(1)" v-show="historytags.length>0">清空</h4>
       </div>
@@ -92,6 +92,7 @@ export default {
       this.historytags =  window.localStorage.getItem('SearchHistory').split(',')
     },
     selectTags(keyword){ //点击单个标签事件搜索
+      console.log("触发跳转");
       this.jumprouter(keyword)
     },
     clearAll(del,index){ //删除事件
