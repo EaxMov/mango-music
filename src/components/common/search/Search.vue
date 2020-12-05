@@ -83,6 +83,7 @@ export default {
       }else{
         history = history.split(",")
       }
+      console.log(history);
       history.unshift(keyword)
       history = Array.from(new Set(history))
       if(history.length>15){
@@ -98,7 +99,7 @@ export default {
     clearAll(del,index){ //删除事件
       if(del === 1){
         this.historytags = []
-        window.localStorage.clear()
+        window.localStorage.removeItem('SearchHistory')
       }else{
         this.historytags.splice(index,1)
         window.localStorage.setItem('SearchHistory',this.historytags)
