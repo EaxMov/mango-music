@@ -21,10 +21,6 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: "",
-    redirect: "/mango-music"
-  },
-  {
-    path: "/mango-music",
     name: "Index",
     component: Index,
     redirect: "/mango-music/recomendmusic",
@@ -37,10 +33,10 @@ const routes = [
         path: "/mango-music/rank",
         component: Rank,
         beforeEnter: (to, from, next) => {
-          if(JSON.parse(window.localStorage.getItem('info'))){
+          if (JSON.parse(window.localStorage.getItem("info"))) {
             next()
-          }else{
-            next('/mango-music/login')
+          } else {
+            next("/mango-music/login")
           }
         }
       },
@@ -108,9 +104,12 @@ const router = new VueRouter({
   mode: "hash",
   base: process.env.BASE_URL,
   routes,
-  // 路由切换时，更新显示坐标 https://blog.csdn.net/panchang199266/article/details/90524319
   scrollBehavior(to, from, savedPosition) {
-    return { x: 0, y: 0 }
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
   }
 })
 

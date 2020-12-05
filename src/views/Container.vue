@@ -1,5 +1,5 @@
 <template>
-<div class="Container" >
+<div class="Container">
 <router-view></router-view>
 <LyricBox />
 </div>

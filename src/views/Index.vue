@@ -37,7 +37,6 @@ export default {
 
 <style scoped>
 .Index {
-  overflow: scroll;
   height: 100%;
 }
 .el-backtop {

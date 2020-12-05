@@ -1,20 +1,23 @@
 <template>
-  <div class="Footer shadow" :class="{playshow:playisshow}">
-    <div class="authorinfo">
-      <p>Mango-Music</p>
-      <h4>By D18C4208</h4>
+  <div>
+    <div class="Footer shadow">
+      <div class="authorinfo">
+        <p>Mango-Music</p>
+        <h4>By D18C4208</h4>
+      </div>
+      <div class="contact">
+        <el-popover placement="top" width="200" trigger="hover" popper-class="qq-Popover">
+          <div class="qqDiv"><img src="https://file.moetu.org/images/2020/12/01/_20201201200419b67a18d192ec6a69.jpg"></div>
+          <a slot="reference"><i class="iconfont icon-qq"></i></a>
+        </el-popover>
+        <el-popover placement="top" width="200" trigger="hover" popper-class="vx-Popover">
+          <div class="vxDiv"><img src="https://file.moetu.org/images/2020/12/01/_202012012004277ebf57224fd1b93d.jpg"></div>
+          <a slot="reference"><i class="iconfont icon-logo-wechat"></i></a>
+        </el-popover>
+        <a href="https://github.com/MoveAXS/mango-music" target="_blank"><i class="iconfont icon-github"></i></a>
+      </div>
     </div>
-    <div class="contact">
-      <el-popover placement="top" width="200" trigger="hover" popper-class="qq-Popover">
-        <div class="qqDiv"><img src="https://file.moetu.org/images/2020/12/01/_20201201200419b67a18d192ec6a69.jpg"></div>
-        <a slot="reference"><i class="iconfont icon-qq"></i></a>
-      </el-popover>
-      <el-popover placement="top" width="200" trigger="hover" popper-class="vx-Popover">
-        <div class="vxDiv"><img src="https://file.moetu.org/images/2020/12/01/_202012012004277ebf57224fd1b93d.jpg"></div>
-        <a slot="reference"><i class="iconfont icon-logo-wechat"></i></a>
-      </el-popover>
-      <a href="https://github.com/MoveAXS/mango-music" target="_blank"><i class="iconfont icon-github"></i></a>
-    </div>
+    <div :class="{playshow:playisshow}"></div>
   </div>
 
 </template>
@@ -41,14 +44,11 @@ export default {
   margin-top: 50px;
   background-color: rgba(255, 255, 255, 0.7);
   width: 100%;
-  height: 160px;
+  height: 180px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  .playshow {
-    margin-bottom: 70px;
-  }
   .authorinfo {
     height: 50px;
     max-width: 1380px;
@@ -97,7 +97,12 @@ export default {
     border-left: 3px solid #f0c734;
   }
 }
-.qq-Popover,.vx-Popover{
+.playshow {
+  width: 100%;
+  height: 70px;
+}
+.qq-Popover,
+.vx-Popover {
   width: 200px;
   img {
     width: 100%;
