@@ -10,10 +10,10 @@
     <div class="bgball bg-animation2"></div>
     <div class="bgball bg-animation3"></div>
     <div class="bgball bg-animation4"></div>
-    <el-backtop target=".Index" :visibility-height="300" :bottom="170">
+    <!-- <el-backtop target=".Index" :visibility-height="300" :bottom="170">
       <div class="iconfont icon-262">
       </div>
-    </el-backtop>
+    </el-backtop> -->
   </div>
 </template>
 
@@ -36,15 +36,16 @@ export default {
 </script>
 
 <style scoped>
-.Index {
-  height: 100%;
+/* .Index {
+   height: 100%;
+  overflow-y: scroll; 
 }
-.el-backtop {
+ .el-backtop {
   right: 2.5% !important;
 }
-.icon-262{
+.icon-262 {
   font-size: 46px;
-}
+}  */
 .bgball {
   pointer-events: none;
   position: fixed;

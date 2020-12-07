@@ -2,7 +2,7 @@
 <div class="RecommendNewMusic" v-loading="!recommendNewMusic.length">
   <titleCricular><h4>推荐新歌</h4></titleCricular>
   <div class="NewMusicList">
-    <div class="ListItem shadow" v-for="(item,index) in recommendNewMusic" :key="item.id" @dblclick="SelectNewMusic(index)">
+    <div class="ListItem shadow" v-for="(item,index) in recommendNewMusic" :key="item.id" @click="SelectNewMusic(index)">
       <div class="index">{{index + 1 | newSongs}}</div>
       <div class="musicimg"><img v-lazy="item.picUrl + '?param=80y80'"></div>
       <div class="muiscname">

@@ -1,6 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app" class="app">
     <router-view v-if="isRouterAlive" />
+        <el-backtop target=".app" :visibility-height="300" :bottom="190">
+      <div class="iconfont icon-262">
+      </div>
+    </el-backtop>
   </div>
 </template>
 <script>
@@ -23,6 +27,11 @@ export default {
       })
     }
   },
+  watch: {
+    $route: function (to, from) {
+      this.$refs.app.scrollTop = 0
+    },
+  },
 }
 </script>
 <style>
@@ -34,6 +43,13 @@ body {
 #app {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
+}
+.el-backtop {
+  right: 2.5% !important;
+}
+.icon-262 {
+  font-size: 46px;
 }
 ::-webkit-scrollbar {
   width: 0;
