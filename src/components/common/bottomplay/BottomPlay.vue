@@ -2,7 +2,7 @@
   <transition name="fade">
     <div class="BottomPlay shadow" v-show="BtPlayisShow">
       <Cover :PlayingMusicConfig="$store.state.PlayingMusicConfig" />
-      <Controls :PlayerMusicMP3="PlayerMusicMP3" ref="ControlsRef"/>
+      <Controls :PlayerMusicMP3="PlayerMusicMP3" ref="ControlsRef" />
       <Progress v-if="$store.state.PlayingMusicConfig.id" :Duration="$store.state.PlayingMusicConfig.dt" />
       <Volume v-if="$store.state.PlayingMusicConfig.id" />
       <RightFunMeu />
@@ -65,9 +65,9 @@ export default {
         this.lrc.stop()
       }
 
-        //异步移要获取歌曲信息之后。
-        // this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
-        // this.getMusicLyric(MusicConfig.id)  //获取歌词并二次处理歌词
+      //异步移要获取歌曲信息之后。
+      // this.$refs.ControlsRef.ControlMiddle('start', 'newmusic') //告诉子组件，用户点击歌曲播放，改变播放按钮状态
+      // this.getMusicLyric(MusicConfig.id)  //获取歌词并二次处理歌词
 
       //底部播放器
       this.getMusicDetail(MusicConfig.id) //歌曲的详细信息
@@ -90,19 +90,17 @@ export default {
     }),
       this.$bus.$on('progressDrap', currentTime => {  //进度条被点击或拖拽，调整歌词回弹位置
         this.lrc.seek(currentTime * 1000)
-        this.lrc.togglePlay()  //拖拽都触发一次中断，如果是开始状态，就会被下面的判断再触发开始，如果是暂停状态就暂停歌词跳动！
         console.log("拖拽，播放状态：", this.$store.state.playing);
-        if (this.$store.state.playing) {  //如果是开始状态，就接着继续歌词跳动
-          console.log("播放状态才能触发的拖拽触发");
+        if (!this.$store.state.playing) {  //如果是开始状态，就反转歌词跳动
           this.lrc.togglePlay()
+          this.$refs.ControlsRef.ControlMiddle('start')
         }
-
       })
-    this.$bus.$on('musicloopEnd', () => {
+    this.$bus.$on('musicloopEnd', () => { //播放结束 歌词滚动重置高度为0
       this.lrc.seek(0)
 
     })
-    this.$bus.$on('watchlrcplaying', bl => { //开始或者播放触发连接歌词方法，使歌词可以接的上
+    this.$bus.$on('watchlrcplaying', bl => { //播放器-> 开始暂停 - >开始或者播放触发连接歌词方法，使歌词可以接的上
       console.log(this.$store.state.playing);
       if (this.lrc) {
         console.log("中断触发");
@@ -224,14 +222,14 @@ export default {
   computed: {
     vipType() {
       const userInfo = JSON.parse(window.localStorage.getItem('info'))
-      return userInfo  &&  userInfo.profile ? userInfo.profile.vipType : ''
+      return userInfo && userInfo.profile ? userInfo.profile.vipType : ''
     },
   },
   destroyed() {
-    if(this.lrc){
+    if (this.lrc) {
       this.lrc.stop()
     }
-    this.$store.commit('UpdatePlayingMusicConfig', '') 
+    this.$store.commit('UpdatePlayingMusicConfig', '')
     this.$bus.$off('LightNum')
     this.$bus.$off('BtPlayisShowEvent')
     this.$bus.$off('progressDrap')
