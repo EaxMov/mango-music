@@ -20,6 +20,6 @@ export default {
 .Container{
     margin-top: 90px;
     min-height: calc(100vh - 300px);
-    min-width: 1380px;
+    /* min-width: 1380px; */
 }
 </style>

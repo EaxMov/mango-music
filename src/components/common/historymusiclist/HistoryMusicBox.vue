@@ -2,7 +2,7 @@
   <div class="historyBox shadow">
     <div class="title">
       播放历史
-      <el-popconfirm title="确定清空全部列表吗？" ref="deleteAll" popper-class="deleteOnce" @onConfirm="confirm">
+      <el-popconfirm title="确定清空全部列表吗？" ref="deleteAll" popper-class="deleteOnce" @confirm="confirm()">
         <i class="iconfont icon-lajitong" title="清空" slot="reference"></i>
       </el-popconfirm>
     </div>
